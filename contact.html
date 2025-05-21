@@ -1,105 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact Form</title>
-<style>
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #e9ecef;
-    margin: 0;
-    padding: 0;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shipping Form - Lumos Glow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@400&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fef9f6;
+      margin: 0;
+      padding: 20px;
+    }
 
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-top: 20px;
-  }
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: 1px solid #f0e4de;
+    }
 
-  .container {
-    max-width: 600px;
-    margin: 50px auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      color: #a14f79;
+      margin-bottom: 30px;
+    }
 
-  label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-    display: block;
-  }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #5b5b5b;
+      font-weight: 600;
+    }
 
-  input[type=text], input[type=email], textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
-  }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
 
-  textarea {
-    height: 100px;
-  }
+    textarea {
+      resize: vertical;
+    }
 
-  input[type=submit] {
-    background-color: #04AA6D;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
+    .submit-btn {
+      background-color: #a14f79;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 30px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-  input[type=submit]:hover {
-    background-color: #45a049;
-  }
-  #Pnumber, #Pincode {
-  border: 1px solid #007BFF;
-  background-color: #f9f9f9;
-  font-size: 15px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-#Pnumber:focus, #Pincode:focus {
-  border-color: #0056b3;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  outline: none;
-}
-
-</style>
+    .submit-btn:hover {
+      background-color: #812a5d;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Contact Form</h1>
-
-<div class="container">
-  <form action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="0f6b356e-b11f-4713-916f-5ef8bead4166">
-    <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Enter your first name" required aria-label="First Name">
-    <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Enter your last name" required aria-label="Last Name">
-    <label for="lname">Phone number</label>
-    <input type="number" id="Pnumber" name="Phonenumber" placeholder="Enter your Phone number" required aria-label="Phone number">
-    <label for="country">Country</label>
-    <input type="text" id="country" name="country" placeholder="Enter your country" required aria-label="Country">
-    <label for="lname">Pincode</label>
-    <input type="number" id="Pincode" name="Pincode" placeholder="Enter your Pincode" required aria-label="Pincode">
-    <label for="comment">Adreess</label>
-    <textarea id="comment" name="comment" placeholder="Share your thoughts about Shopsphere" required aria-label="Comment"></textarea>
-    <input type="hidden" name="redirect" value="https://payments.cashfree.com/forms/lomusglow">
-    <input type="submit" value="Submit">
-  </form>
-</div>
+  <div class="form-container">
+    <h1>Shipping Form</h1>
+    <form action="https://api.web3forms.com/submit" method="post">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required>
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+      <label for="address">Shipping Address</label>
+      <textarea id="address" name="address" rows="3" required></textarea>
+      <label for="product">Product Name</label>
+      <input type="text" id="product" name="product" placeholder="e.g. Rose Glow Candle" required>
+      <label for="scent">Scent</label>
+      <select id="scent" name="scent">
+        <option>Rose Glow</option>
+      </select>
+       <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" min="1" value="1">
+      <input type="hidden" name="redirect" value="https://payments.cashfree.com/forms/lomusglow">
+      <button type="submit" class="submit-btn">Submit Order</button>
+    </form>
+  </div>
 
 </body>
 </html>
