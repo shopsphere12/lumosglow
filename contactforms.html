@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Candle Co.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --pink: #fddde6;
+      --dark-bg: #1a1a1a;
+      --dark-text: #f0f0f0;
+      --input-bg: #fff;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--pink);
+      color: #333;
+    }
+
+    .dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .form-container {
+      max-width: 500px;
+      margin: 5% auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .dark-mode .form-container {
+      background-color: #2b2b2b;
+    }
+
+    h2 {
+      text-align: center;
+      color: #c94f7c;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: var(--input-bg);
+      padding: 0.6rem;
+    }
+
+    .form-group i {
+      margin-right: 10px;
+      color: #c94f7c;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button[type="submit"] {
+      background-color: #c94f7c;
+      color: #fff;
+      padding: 12px 20px;
+      width: 100%;
+      border: none;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #b03e6e;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .toggle-dark {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #c94f7c;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .dark-mode .toggle-dark {
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="toggle-dark" onclick="toggleDarkMode()">Toggle Dark</button>
+
+  <div class="form-container">
+    <h2>Contact Candle Co.</h2>
+    <form action="https://api.web3forms.com/submit" method="POST" onsubmit="return showSuccess(event)">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" name="name" placeholder="Your Name" required>
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" name="email" placeholder="Your Email" required>
+      </div>
+
+      <div class="form-group">
+        <i class="fas fa-comment"></i>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+      </div>
+
+      <input type="checkbox" name="botcheck" class="hidden">
+
+      <button type="submit">Submit</button>
+
+      <div class="success-message" id="successMsg">🎉 Thank you! We'll be in touch soon.</div>
+    </form>
+  </div>
+
+  <script>
+    function showSuccess(e) {
+      e.preventDefault();
+      const form = e.target;
+      const success = document.getElementById("successMsg");
+
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+      })
+      .then(response => {
+        if (response.ok) {
+          form.reset();
+          success.style.display = "block";
+        } else {
+          alert("Something went wrong. Try again!");
+        }
+      })
+      .catch(() => alert("Network error. Try again later."));
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+
+</body>
+</html>
