@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ - Lumos Glow</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-box {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      display: flex;
+      justify-content: center;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+    .faq-container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .faq {
+      background: #fff;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 15px 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .faq:hover {
+      background: #f0f0f0;
+    }
+    .faq h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .faq p {
+      display: none;
+      margin-top: 10px;
+      color: #555;
+    }
+    .faq.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Frequently Asked Questions</h1>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search FAQs...">
+  </div>
+
+  <div class="faq-container" id="faqContainer">
+    <!-- FAQ items will be injected here -->
+  </div>
+
+  <script>
+    const faqs = [
+      {q: "What is Lumos Glow?", a: "Lumos Glow is a luxury candle brand offering premium scented candles."},
+      {q: "Where are your candles made?", a: "All our candles are handmade in India with high-quality materials."},
+      {q: "What wax do you use?", a: "We use 100% natural soy wax for clean and long-lasting burn."},
+      {q: "Do you offer custom candle designs?", a: "Yes, we provide customization for events and bulk orders."},
+      {q: "Are your candles eco-friendly?", a: "Yes, our candles are made with eco-friendly soy wax and recyclable jars."},
+      {q: "How long does delivery take?", a: "Delivery takes 3-7 business days depending on your location."},
+      {q: "Do you ship internationally?", a: "Currently, we only ship within India."},
+      {q: "What payment methods do you accept?", a: "We accept UPI, debit/credit cards, and Razorpay payments."},
+      {q: "Do your candles cause smoke?", a: "No, our candles are smoke-free when burned properly."},
+      {q: "How long does one candle last?", a: "Depending on size, our candles burn for 30-60 hours."},
+      // --- Add up to 50 questions ---
+      {q: "Can I get bulk discounts?", a: "Yes, bulk orders receive special pricing."},
+      {q: "Are your candles safe for kids and pets?", a: "Yes, but always supervise burning candles."},
+      {q: "What scents do you offer?", a: "We offer vanilla, lavender, sandalwood, rose, and more."},
+      {q: "Can I reuse the glass jar?", a: "Absolutely! The jars are reusable and eco-friendly."},
+      {q: "Do you provide gift packaging?", a: "Yes, we offer luxury gift boxes."},
+      {q: "Can candles expire?", a: "Candles don’t expire but are best used within 1 year."},
+      {q: "Do you have seasonal collections?", a: "Yes, we launch festive collections during Diwali, Christmas, etc."},
+      {q: "How do I store candles?", a: "Keep them in a cool, dry place away from sunlight."},
+      {q: "Can I track my order?", a: "Yes, once shipped, you’ll receive a tracking link."},
+      {q: "Do you offer fragrance-free candles?", a: "Yes, we have unscented options for meditation."},
+      {q: "Are your wicks cotton-based?", a: "Yes, we use natural cotton wicks."},
+      {q: "Do you sell refill wax?", a: "Yes, refills are available for select jars."},
+      {q: "Can I cancel my order?", a: "Yes, orders can be canceled within 12 hours of purchase."},
+      {q: "Do you offer cash on delivery?", a: "Currently, we do not offer COD."},
+      {q: "What sizes are available?", a: "We have 100ml, 200ml, and 300ml jars."},
+      {q: "Do you collaborate with influencers?", a: "Yes, we are open to collaborations."},
+      {q: "Can I get a refund?", a: "Refunds are provided for damaged or defective products."},
+      {q: "Do your candles help with relaxation?", a: "Yes, our scented candles are designed for stress relief."},
+      {q: "How do I avoid tunneling?", a: "Let the candle burn until the top layer fully melts."},
+      {q: "Do you offer subscription boxes?", a: "Yes, we offer monthly candle subscription plans."},
+      {q: "Are your candles luxury priced?", a: "Yes, they are premium handcrafted products."},
+      {q: "Do you use artificial fragrances?", a: "No, we use natural essential oils."},
+      {q: "Do your candles make good gifts?", a: "Yes, perfect for birthdays, weddings, and festivals."},
+      {q: "Are the jars heat-resistant?", a: "Yes, they are designed to handle heat safely."},
+      {q: "Do you offer wedding favors?", a: "Yes, we create customized wedding gift candles."},
+      {q: "Can I order a single piece?", a: "Yes, no minimum order required."},
+      {q: "Do you support eco-initiatives?", a: "Yes, part of our profits go to environmental causes."},
+      {q: "What’s the return policy?", a: "Products can be returned within 7 days if unused."},
+      {q: "Do you offer wholesale partnerships?", a: "Yes, retailers can apply for wholesale pricing."},
+      {q: "Can I light multiple candles together?", a: "Yes, but keep at least 3 inches apart."},
+      {q: "Do you have corporate gifting options?", a: "Yes, we provide bulk gifting solutions."},
+      {q: "Do you offer festival discounts?", a: "Yes, during Diwali, Christmas, and New Year."},
+      {q: "Do you make personalized candles?", a: "Yes, with custom names, photos, and scents."},
+      {q: "Are your candles vegan?", a: "Yes, we do not use any animal-derived ingredients."},
+      {q: "Do you sell accessories like lighters?", a: "Yes, we sell candle care kits."},
+      {q: "Do you provide sample packs?", a: "Yes, we have discovery sets."},
+      {q: "What’s your best-selling scent?", a: "Lavender and Sandalwood are most popular."},
+      {q: "Do candles help with meditation?", a: "Yes, scented candles improve focus and relaxation."},
+      {q: "Do you offer fragrance intensity options?", a: "Yes, from mild to strong aroma levels."},
+      {q: "Do you provide instructions?", a: "Each candle comes with a care guide."},
+      {q: "Do you sell tealights?", a: "Yes, we also sell tealight candles."}
+    ];
+
+    const container = document.getElementById("faqContainer");
+
+    // Generate FAQ items
+    faqs.forEach(item => {
+      const div = document.createElement("div");
+      div.classList.add("faq");
+      div.innerHTML = `<h3>${item.q}</h3><p>${item.a}</p>`;
+      div.addEventListener("click", () => div.classList.toggle("active"));
+      container.appendChild(div);
+    });
+
+    // Search functionality
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+      const filter = this.value.toLowerCase();
+      document.querySelectorAll(".faq").forEach(faq => {
+        const text = faq.textContent.toLowerCase();
+        faq.style.display = text.includes(filter) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
