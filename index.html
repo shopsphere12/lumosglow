@@ -230,6 +230,21 @@
       transition: background 0.3s;
     }
     .pre-question:hover { background: #f8bbd0; }
+
+      .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  footer a:hover {
+    color: #ff4da6;
+  }
+  @media(max-width:600px) {
+    footer { text-align: center; }
+    .footer-grid div { margin-bottom: 20px; }
+  }
   </style>
 </head>
 <body>
@@ -285,9 +300,8 @@
   </div>
 
 <!-- Footer -->
-<!-- Footer Section -->
 <footer style="background:#222; color:#fff; padding:40px 20px; font-family: Arial, sans-serif;">
-  <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:30px; max-width:1200px; margin:auto;">
+  <div class="footer-grid">
 
     <!-- About -->
     <div>
