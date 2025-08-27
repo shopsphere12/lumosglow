@@ -1,276 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lumos Glow - Luxury Candles</title>
-  <link rel="icon" href="Untitled.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
   <style>
     body {
+      font-family: "Poppins", sans-serif;
+      background: #fff0f7;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      padding: 0;
     }
 
-    /* Chatbot styles */
-    .chatbot-btn {
+    /* Chatbot container */
+    .chatbot {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: pink;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-    .chatbot-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(255, 105, 180, 1);
-    }
-
-    .chatbot-window {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
       width: 320px;
-      height: 420px;
-      background: white;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-      display: none;
-      flex-direction: column;
       overflow: hidden;
-      z-index: 1000;
-      animation: fadeIn 0.3s ease-in-out;
+      background: white;
+      border: 2px solid #ffb6d9;
+      display: flex;
+      flex-direction: column;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .chatbot-header {
-      background: linear-gradient(90deg, pink, #ff9ecf);
-      padding: 10px;
-      text-align: center;
-      font-weight: 600;
+    /* Header */
+    .chat-header {
+      background: linear-gradient(90deg, #ffb6d9, #ff8cc9);
       color: white;
-      position: relative;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .chatbot-messages {
-      flex: 1;
+    .refresh-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Chat body */
+    .chat-body {
+      height: 250px;
       padding: 10px;
       overflow-y: auto;
-      background: #fff;
+      font-size: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      background: white;
     }
 
-    .chatbot-message {
-      max-width: 80%;
+    .bot-message, .user-message {
       padding: 8px 12px;
       border-radius: 12px;
-      font-size: 14px;
-      line-height: 1.4;
-      word-wrap: break-word;
+      max-width: 80%;
+      animation: fadeIn 0.3s ease-in-out;
     }
-    .chatbot-message.bot {
-      background: #fff;
-      border: 1px solid pink;
+
+    .bot-message {
+      background: #ffe3f0;
       align-self: flex-start;
     }
-    .chatbot-message.user {
-      background: #ffe0ef;
+
+    .user-message {
+      background: #ffb6d9;
       align-self: flex-end;
-    }
-
-    .chatbot-footer {
-      display: flex;
-      align-items: center;
-      border-top: 1px solid #eee;
-      padding: 8px;
-      gap: 5px;
-    }
-
-    .chatbot-input {
-      flex: 1;
-      border: none;
-      padding: 8px;
-      border-radius: 20px;
-      outline: none;
-      font-family: inherit;
-      font-size: 14px;
-      background: #f9f9f9;
-    }
-
-    .chatbot-send {
-      background: pink;
-      border: none;
       color: white;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
     }
 
-    .chatbot-options {
+    /* Pre-questions */
+    .pre-questions {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 5px;
-    }
-    .chatbot-option {
-      background: #ffe0ef;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: all 0.2s ease;
-    }
-    .chatbot-option:hover {
-      background: pink;
-      color: white;
+      padding: 8px;
+      border-top: 1px solid #ffd6e8;
+      background: #fff0f7;
     }
 
-    .chatbot-controls {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      display: flex;
-      gap: 8px;
-    }
-    .chatbot-control-btn {
-      background: white;
+    .pre-questions button {
+      flex: 1;
+      background: #ffb6d9;
       border: none;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
       cursor: pointer;
-      font-size: 12px;
-      font-weight: bold;
-      color: pink;
+      transition: 0.3s;
+    }
+
+    .pre-questions button:hover {
+      background: #ff8cc9;
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+    }
+
+    /* Input */
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ffd6e8;
+      background: white;
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .chat-input button {
+      background: #ff8cc9;
+      border: none;
+      color: white;
+      padding: 0 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .chat-input button:hover {
+      background: #ff4fa3;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <!-- Your existing website content here -->
-  <h1 style="text-align:center;">Welcome to Lumos Glow</h1>
 
   <!-- Chatbot -->
-  <button class="chatbot-btn">💬</button>
-  <div class="chatbot-window">
-    <div class="chatbot-header">
+  <div class="chatbot">
+    <div class="chat-header">
       💖 Lumos Glow Assistant
-      <div class="chatbot-controls">
-        <button class="chatbot-control-btn" id="backBtn">◀</button>
-        <button class="chatbot-control-btn" id="refreshBtn">⟳</button>
-      </div>
+      <button class="refresh-btn" onclick="refreshChat()">🔄</button>
     </div>
-    <div class="chatbot-messages" id="chatMessages">
-      <div class="chatbot-message bot">Hello ✨ How can I help you today?</div>
-      <div class="chatbot-options" id="preQuestions">
-        <button class="chatbot-option">🕯️ Burn time of candles?</button>
-        <button class="chatbot-option">📦 What is your return policy?</button>
-        <button class="chatbot-option">💰 Pricing details?</button>
-        <button class="chatbot-option">📞 Contact support</button>
-      </div>
+    <div class="chat-body" id="chat-body">
+      <div class="bot-message">Hello ✨ How can I help you today?</div>
     </div>
-    <div class="chatbot-footer">
-      <input type="text" id="chatInput" class="chatbot-input" placeholder="Type your message..." />
-      <button class="chatbot-send" id="sendBtn">➤</button>
+
+    <!-- Predefined Questions -->
+    <div class="pre-questions">
+      <button onclick="askPredefined('🕯️ Candle burn time?')">🕯️ Candle burn time?</button>
+      <button onclick="askPredefined('🚚 Shipping & Delivery?')">🚚 Shipping & Delivery?</button>
+      <button onclick="askPredefined('❌ Return policy?')">❌ Return policy?</button>
+      <button onclick="askPredefined('📞 Contact support?')">📞 Contact support?</button>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">➤</button>
     </div>
   </div>
 
   <script>
-    const chatbotBtn = document.querySelector('.chatbot-btn');
-    const chatbotWindow = document.querySelector('.chatbot-window');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const preQuestions = document.getElementById('preQuestions');
-    const backBtn = document.getElementById('backBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
+    function sendMessage() {
+      let input = document.getElementById("user-input");
+      let message = input.value.trim();
+      if (!message) return;
 
-    chatbotBtn.addEventListener('click', () => {
-      chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
-    });
+      let chatBody = document.getElementById("chat-body");
 
-    function addMessage(sender, text) {
-      const msg = document.createElement('div');
-      msg.classList.add('chatbot-message', sender);
-      msg.innerHTML = text;
-      chatMessages.appendChild(msg);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+      // User message
+      let userMsg = document.createElement("div");
+      userMsg.className = "user-message";
+      userMsg.textContent = message;
+      chatBody.appendChild(userMsg);
+
+      input.value = "";
+
+      // Bot response
+      setTimeout(() => {
+        let botMsg = document.createElement("div");
+        botMsg.className = "bot-message";
+
+        if (message.toLowerCase().includes("burn")) {
+          botMsg.textContent = "🕯️ Our candles burn 30–35 hrs (small) and 50–60 hrs (big).";
+        } else if (message.toLowerCase().includes("ship")) {
+          botMsg.textContent = "🚚 Delivery takes 3–7 days depending on location.";
+        } else if (message.toLowerCase().includes("return")) {
+          botMsg.textContent = "❌ Sorry, we do not accept returns.";
+        } else if (message.toLowerCase().includes("contact")) {
+          botMsg.textContent = "📞 For more info, contact us at: support@lumosglow.com";
+        } else {
+          botMsg.textContent = "🤔 For more info, contact us.";
+        }
+
+        chatBody.appendChild(botMsg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 600);
     }
 
-    function botReply(userMsg) {
-      let reply = "";
-      userMsg = userMsg.toLowerCase();
+    function askPredefined(question) {
+      let chatBody = document.getElementById("chat-body");
+      let userMsg = document.createElement("div");
+      userMsg.className = "user-message";
+      userMsg.textContent = question;
+      chatBody.appendChild(userMsg);
 
-      if (userMsg.includes("burn")) {
-        reply = "🕯️ Our candles burn approx. <b>30–35 hrs (small)</b> and <b>50–60 hrs (big)</b>.";
-      } else if (userMsg.includes("return")) {
-        reply = "🚫 Sorry, we do not accept returns.";
-      } else if (userMsg.includes("price")) {
-        reply = "💰 Our prices vary by collection. Please check the products section.";
-      } else if (userMsg.includes("contact")) {
-        reply = `📞 For more info, kindly <a href="https://shopsphere12.github.io/lumosglow/contactforms.html" target="_blank" style="color:pink;font-weight:bold;">click here to contact us</a>.`;
-      } else {
-        reply = `❓ For more info, kindly <a href="https://shopsphere12.github.io/lumosglow/contactforms.html" target="_blank" style="color:pink;font-weight:bold;">click here to contact us</a>.`;
-      }
+      setTimeout(() => {
+        let botMsg = document.createElement("div");
+        botMsg.className = "bot-message";
+        
+        if (question.includes("burn")) {
+          botMsg.textContent = "🕯️ Our candles burn 30–35 hrs (small) and 50–60 hrs (big).";
+        } else if (question.includes("Shipping")) {
+          botMsg.textContent = "🚚 Delivery takes 3–7 days depending on location.";
+        } else if (question.includes("Return")) {
+          botMsg.textContent = "❌ Sorry, we do not accept returns.";
+        } else if (question.includes("Contact")) {
+          botMsg.textContent = "📞 For more info, contact us at: support@lumosglow.com";
+        } else {
+          botMsg.textContent = "🤔 For more info, contact us.";
+        }
 
-      addMessage("bot", reply);
+        chatBody.appendChild(botMsg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 600);
     }
 
-    sendBtn.addEventListener('click', () => {
-      const userMsg = chatInput.value.trim();
-      if (userMsg) {
-        addMessage("user", userMsg);
-        botReply(userMsg);
-        chatInput.value = "";
-        preQuestions.style.display = "none";
-      }
-    });
-
-    chatInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        sendBtn.click();
-      }
-    });
-
-    document.querySelectorAll(".chatbot-option").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const text = btn.innerText;
-        addMessage("user", text);
-        botReply(text);
-        preQuestions.style.display = "none";
-      });
-    });
-
-    backBtn.addEventListener("click", () => {
-      preQuestions.style.display = "flex";
-    });
-
-    refreshBtn.addEventListener("click", () => {
-      chatMessages.innerHTML = '<div class="chatbot-message bot">Hello ✨ How can I help you today?</div>';
-      preQuestions.style.display = "flex";
-    });
+    function refreshChat() {
+      document.getElementById("chat-body").innerHTML =
+        '<div class="bot-message">Hello ✨ How can I help you today?</div>';
+    }
   </script>
+
 </body>
 </html>
