@@ -3,258 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lumos Glow - Luxury Candles</title>
+  <title>Lumos Glow - Assistant</title>
   <style>
     body {
-      font-family: "Poppins", sans-serif;
-      background: #fff0f7;
+      font-family: Arial, sans-serif;
+      background: #fff;
       margin: 0;
       padding: 0;
     }
 
-    /* Chatbot container */
-    .chatbot {
+    h1 {
+      text-align: center;
+      margin: 20px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    /* Chat widget */
+    .chat-container {
       position: fixed;
-      bottom: 20px;
+      bottom: 90px;
       right: 20px;
       width: 320px;
+      max-height: 500px;
+      background: #fff;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-      overflow: hidden;
-      background: white;
-      border: 2px solid #ffb6d9;
-      display: flex;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+      display: none;
       flex-direction: column;
+      overflow: hidden;
     }
 
-    /* Header */
     .chat-header {
-      background: linear-gradient(90deg, #ffb6d9, #ff8cc9);
+      background: linear-gradient(90deg, #ff7eb3, #ff4da6);
       color: white;
-      padding: 12px;
-      font-weight: bold;
-      font-size: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chat-header .left-controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .chat-header button {
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      color: white;
-    }
-
-    /* Chat body */
-    .chat-body {
-      height: 250px;
       padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .chat-body {
+      padding: 10px;
+      flex: 1;
       overflow-y: auto;
       font-size: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      background: white;
     }
 
-    .bot-message, .user-message {
+    .bot-msg, .user-msg {
       padding: 8px 12px;
-      border-radius: 12px;
+      margin: 6px 0;
+      border-radius: 10px;
       max-width: 80%;
-      animation: fadeIn 0.3s ease-in-out;
     }
 
-    .bot-message {
-      background: #ffe3f0;
+    .bot-msg {
+      background: #f8f0f8;
+      border: 1px solid #ffb6d9;
       align-self: flex-start;
     }
 
-    .bot-message a {
-      color: #ff4fa3;
-      text-decoration: underline;
-      font-weight: bold;
-    }
-
-    .user-message {
-      background: #ffb6d9;
+    .user-msg {
+      background: #ffe4f2;
+      border: 1px solid #ff99cc;
       align-self: flex-end;
-      color: white;
     }
 
-    /* Pre-questions */
-    .pre-questions {
+    /* Suggested buttons */
+    .suggestions {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 8px;
-      border-top: 1px solid #ffd6e8;
-      background: #fff0f7;
+      flex-direction: column;
+      margin-top: 10px;
     }
 
-    .pre-questions button {
-      flex: 1;
-      background: #ffb6d9;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 13px;
+    .suggestion-btn {
+      background: #fff;
+      border: 1px solid #ff99cc;
+      border-radius: 8px;
+      padding: 6px;
+      margin: 4px 0;
       cursor: pointer;
+      font-size: 14px;
+      text-align: left;
       transition: 0.3s;
     }
 
-    .pre-questions button:hover {
-      background: #ff8cc9;
+    .suggestion-btn:hover {
+      background: #ffe6f2;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 95%;
+      padding: 6px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .contact-form button {
+      background: #ff4da6;
       color: white;
-      transform: scale(1.05);
-      box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
-    }
-
-    /* Input */
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ffd6e8;
-      background: white;
-    }
-
-    .chat-input input {
-      flex: 1;
+      padding: 8px 12px;
       border: none;
-      padding: 12px;
-      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .chat-footer {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
       outline: none;
     }
 
-    .chat-input button {
-      background: #ff8cc9;
+    .chat-footer button {
+      background: #ff4da6;
       border: none;
-      color: white;
-      padding: 0 16px;
+      border-radius: 50%;
+      padding: 8px;
+      margin-left: 6px;
       cursor: pointer;
-      transition: 0.3s;
+      color: white;
     }
 
-    .chat-input button:hover {
-      background: #ff4fa3;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Floating toggle button */
+    .chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #ff4da6;
+      color: white;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.5);
     }
   </style>
 </head>
 <body>
+  <h1>Welcome to Lumos Glow</h1>
 
-  <!-- Chatbot -->
-  <div class="chatbot" id="chatbot">
-    <div class="chat-header">
-      <div class="left-controls">
-        <button onclick="closeChat()">⬅</button>
-        💖 Lumos Glow Assistant
+  <!-- Chat Widget -->
+  <div class="chat-container" id="chatBox">
+    <div class="chat-header">💖 Lumos Glow Assistant</div>
+    <div class="chat-body" id="chatBody">
+      <div class="bot-msg">Hello ✨ How can I help you today?</div>
+
+      <!-- Pre-questions -->
+      <div class="suggestions">
+        <div class="suggestion-btn" onclick="askQuestion('🕯️ Candle burn time?')">🕯️ Candle burn time?</div>
+        <div class="suggestion-btn" onclick="askQuestion('🚚 Shipping & Delivery?')">🚚 Shipping & Delivery?</div>
+        <div class="suggestion-btn" onclick="askQuestion('❌ Return policy?')">❌ Return policy?</div>
+        <div class="suggestion-btn" onclick="openContactForm()">📞 Contact Support</div>
       </div>
-      <button onclick="refreshChat()">🔄</button>
-    </div>
-    <div class="chat-body" id="chat-body">
-      <div class="bot-message">Hello ✨ How can I help you today?</div>
+
+      <!-- Contact Form (hidden by default) -->
+      <div class="contact-form" id="contactForm">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <textarea rows="3" placeholder="Your Message"></textarea>
+        <button onclick="submitContact()">Send</button>
+        <button onclick="closeContactForm()">⬅️ Back</button>
+      </div>
     </div>
 
-    <!-- Predefined Questions -->
-    <div class="pre-questions">
-      <button onclick="askPredefined('🕯️ Candle burn time?')">🕯️ Candle burn time?</button>
-      <button onclick="askPredefined('🚚 Shipping & Delivery?')">🚚 Shipping & Delivery?</button>
-      <button onclick="askPredefined('❌ Return policy?')">❌ Return policy?</button>
-      <button onclick="askPredefined('📞 Contact support?')">📞 Contact support?</button>
-    </div>
-
-    <div class="chat-input">
-      <input type="text" id="user-input" placeholder="Type your message...">
-      <button onclick="sendMessage()">➤</button>
+    <div class="chat-footer">
+      <input type="text" placeholder="Type your message...">
+      <button>➤</button>
     </div>
   </div>
 
+  <!-- Floating Chat Toggle -->
+  <div class="chat-toggle" onclick="toggleChat()">💬</div>
+
   <script>
-    function sendMessage() {
-      let input = document.getElementById("user-input");
-      let message = input.value.trim();
-      if (!message) return;
+    function toggleChat() {
+      let chat = document.getElementById("chatBox");
+      chat.style.display = (chat.style.display === "flex") ? "none" : "flex";
+    }
 
-      let chatBody = document.getElementById("chat-body");
-
-      // User message
+    function askQuestion(question) {
+      let chatBody = document.getElementById("chatBody");
       let userMsg = document.createElement("div");
-      userMsg.className = "user-message";
-      userMsg.textContent = message;
+      userMsg.className = "user-msg";
+      userMsg.innerText = question;
       chatBody.appendChild(userMsg);
 
-      input.value = "";
+      let botMsg = document.createElement("div");
+      botMsg.className = "bot-msg";
 
-      // Bot response
-      setTimeout(() => {
-        let botMsg = document.createElement("div");
-        botMsg.className = "bot-message";
+      if (question.includes("burn time")) botMsg.innerText = "⏳ Our candles burn 30-40 hours depending on size.";
+      else if (question.includes("Shipping")) botMsg.innerText = "🚚 We deliver across India within 3-7 days.";
+      else if (question.includes("Return")) botMsg.innerText = "🚫 Sorry, we do not accept returns.";
+      chatBody.appendChild(botMsg);
 
-        if (message.toLowerCase().includes("burn")) {
-          botMsg.textContent = "🕯️ Our candles burn 30–35 hrs (small) and 50–60 hrs (big).";
-        } else if (message.toLowerCase().includes("ship")) {
-          botMsg.textContent = "🚚 Delivery takes 3–7 days depending on location.";
-        } else if (message.toLowerCase().includes("return")) {
-          botMsg.textContent = "❌ Sorry, we do not accept returns.";
-        } else if (message.toLowerCase().includes("contact")) {
-          botMsg.innerHTML = "📞 Please fill out our <a href='/contact.html' target='_blank'>Contact Form</a>.";
-        } else {
-          botMsg.textContent = "🤔 For more info, please use the Contact Form.";
-        }
-
-        chatBody.appendChild(botMsg);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      }, 600);
+      chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    function askPredefined(question) {
-      let chatBody = document.getElementById("chat-body");
-      let userMsg = document.createElement("div");
-      userMsg.className = "user-message";
-      userMsg.textContent = question;
-      chatBody.appendChild(userMsg);
-
-      setTimeout(() => {
-        let botMsg = document.createElement("div");
-        botMsg.className = "bot-message";
-
-        if (question.includes("burn")) {
-          botMsg.textContent = "🕯️ Our candles burn 30–35 hrs (small) and 50–60 hrs (big).";
-        } else if (question.includes("Shipping")) {
-          botMsg.textContent = "🚚 Delivery takes 3–7 days depending on location.";
-        } else if (question.includes("Return")) {
-          botMsg.textContent = "❌ Sorry, we do not accept returns.";
-        } else if (question.includes("Contact")) {
-          botMsg.innerHTML = "📞 Please fill out our <a href='/contact.html' target='_blank'>Contact Form</a>.";
-        } else {
-          botMsg.textContent = "🤔 For more info, please use the Contact Form.";
-        }
-
-        chatBody.appendChild(botMsg);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      }, 600);
+    function openContactForm() {
+      document.querySelector(".suggestions").style.display = "none";
+      document.getElementById("contactForm").style.display = "block";
     }
 
-    function refreshChat() {
-      document.getElementById("chat-body").innerHTML =
-        '<div class="bot-message">Hello ✨ How can I help you today?</div>';
+    function closeContactForm() {
+      document.querySelector(".suggestions").style.display = "flex";
+      document.getElementById("contactForm").style.display = "none";
     }
 
-    function closeChat() {
-      document.getElementById("chatbot").style.display = "none";
+    function submitContact() {
+      alert("✅ Your message has been sent!");
+      closeContactForm();
     }
   </script>
-
 </body>
 </html>
