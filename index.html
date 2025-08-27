@@ -12,7 +12,7 @@
   <meta name="description" content="Lumos Glow offers premium handcrafted luxury candles with soothing aromas. Indulge in pure elegance." />
   <meta name="keywords" content="candles, luxury candles, rose candle, scented candles, Lumos Glow" />
 
-  <!-- Open Graph for social sharing -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Lumos Glow - Luxury Candles" />
   <meta property="og:description" content="Handcrafted premium scented candles for a luxurious experience." />
   <meta property="og:image" content="./ChatGPT Image May 15, 2025, 03_05_01 PM.png" />
@@ -80,12 +80,8 @@
     .product-card:hover { transform: translateY(-8px); }
     .product-card img {
       width: 100%;
-      height: auto;          /* Keep full image */
-      max-height: 280px;     /* Prevent too tall */
-      object-fit: contain;   /* Show full candle */
-      background: #fff;      /* Clean background */
-      display: block;
-      margin: 0 auto;
+      max-height: 280px; object-fit: contain;
+      background: #fff; display: block; margin: 0 auto;
     }
     .product-card h3 {
       font-family: 'Playfair Display', serif;
@@ -106,6 +102,78 @@
       background: #eee; padding: 30px; text-align: center;
       font-size: 14px; color: #666;
     }
+
+    /* Chatbot */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      max-height: 400px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      z-index: 2000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .chatbot-container:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+    }
+    .chat-header {
+      background: linear-gradient(90deg, #ffb6c1, #ff69b4);
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      background: #fff;
+    }
+    .chat-message {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 12px;
+      max-width: 80%;
+      animation: fadeIn 0.5s ease;
+    }
+    .user-message {
+      background: #ffe4ec;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+    .bot-message {
+      background: #f2f2f2;
+      color: #333;
+    }
+    .chat-footer {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    .chat-footer input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 0 0 0 15px;
+      outline: none;
+    }
+    .chat-footer button {
+      background: #ff69b4;
+      border: none;
+      color: white;
+      padding: 0 20px;
+      cursor: pointer;
+      border-radius: 0 0 15px 0;
+      transition: background 0.3s;
+    }
+    .chat-footer button:hover { background: #d63384; }
   </style>
 </head>
 <body>
@@ -139,6 +207,8 @@
       <h3>Rose Glow Candle</h3>
       <p>Crafted from soy wax and natural rose essence. A floral escape in a glass jar.</p>
       <p class="price">₹149</p>
+      <p style="margin: 0 15px 10px; color: #a14f79;"><b>Burn Time:</b> 30–35 hrs (Small) | 50–60 hrs (Big)</p>
+      <p style="margin: 0 15px 15px; color: red;"><b>No Returns Available</b></p>
       <a href="./goldrose.html" class="btn">Buy Now</a>
     </div>
   </section>
@@ -158,9 +228,21 @@
   <p>&copy; 2025 Lumos Glow Candles. Designed for elegance.</p>
 </footer>
 
-<!-- Razorpay & Slideshow -->
+<!-- Chatbot -->
+<div class="chatbot-container">
+  <div class="chat-header">💬 Lumos Glow Assistant</div>
+  <div class="chat-body" id="chat-body">
+    <div class="chat-message bot-message">Hello ✨ How can I help you today?</div>
+  </div>
+  <div class="chat-footer">
+    <input type="text" id="chat-input" placeholder="Type your message..." />
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<!-- Razorpay & Scripts -->
 <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
-<script defer>
+<script>
   // Slideshow
   let slideIndex = 0;
   function showSlides() {
@@ -173,9 +255,49 @@
   }
   showSlides();
 
-  // 🚀 Auto redirect if user comes from Instagram
+  // 🚀 Auto redirect from Instagram
   if (document.referrer.includes("instagram.com")) {
-    window.location.href = "./goldrose.html"; // redirect target
+    window.location.href = "./goldrose.html";
+  }
+
+  // Chatbot Logic
+  function sendMessage() {
+    const input = document.getElementById("chat-input");
+    const msg = input.value.trim();
+    if (!msg) return;
+    
+    addMessage(msg, "user");
+    input.value = "";
+
+    setTimeout(() => {
+      let reply = getBotResponse(msg.toLowerCase());
+      addMessage(reply, "bot");
+    }, 600);
+  }
+
+  function addMessage(text, sender) {
+    const chatBody = document.getElementById("chat-body");
+    const msgDiv = document.createElement("div");
+    msgDiv.classList.add("chat-message", sender === "user" ? "user-message" : "bot-message");
+    msgDiv.innerText = text;
+    chatBody.appendChild(msgDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function getBotResponse(msg) {
+    if (msg.includes("price") || msg.includes("cost")) {
+      return "Our Rose Glow Candle is priced at ₹149 🌸";
+    } else if (msg.includes("cod") || msg.includes("cash")) {
+      return "We do not offer Cash on Delivery. Instead, note burn time: 30–35 hrs (Small), 50–60 hrs (Big).";
+    } else if (msg.includes("return")) {
+      return "Sorry, we have a strict no-returns policy ❌";
+    } else if (msg.includes("burn") || msg.includes("time")) {
+      return "⏳ Burn Time: Small – 30–35 hrs | Big – 50–60 hrs.";
+    } else if (msg.includes("contact")) {
+      return "You can contact us at 📞 +91 7204451526 or 📧 shopsphere.in@gmail.com";
+    } else {
+      return "For more info, contact us 📞 +91 7204451526";
+    }
   }
 </script>
 
