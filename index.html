@@ -39,7 +39,13 @@
       align-items: center;
     }
 
-    .refresh-btn {
+    .chat-header .left-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chat-header button {
       background: none;
       border: none;
       font-size: 16px;
@@ -69,6 +75,12 @@
     .bot-message {
       background: #ffe3f0;
       align-self: flex-start;
+    }
+
+    .bot-message a {
+      color: #ff4fa3;
+      text-decoration: underline;
+      font-weight: bold;
     }
 
     .user-message {
@@ -142,10 +154,13 @@
 <body>
 
   <!-- Chatbot -->
-  <div class="chatbot">
+  <div class="chatbot" id="chatbot">
     <div class="chat-header">
-      💖 Lumos Glow Assistant
-      <button class="refresh-btn" onclick="refreshChat()">🔄</button>
+      <div class="left-controls">
+        <button onclick="closeChat()">⬅</button>
+        💖 Lumos Glow Assistant
+      </div>
+      <button onclick="refreshChat()">🔄</button>
     </div>
     <div class="chat-body" id="chat-body">
       <div class="bot-message">Hello ✨ How can I help you today?</div>
@@ -193,9 +208,9 @@
         } else if (message.toLowerCase().includes("return")) {
           botMsg.textContent = "❌ Sorry, we do not accept returns.";
         } else if (message.toLowerCase().includes("contact")) {
-          botMsg.textContent = "📞 For more info, contact us at: support@lumosglow.com";
+          botMsg.innerHTML = "📞 Please fill out our <a href='/contact.html' target='_blank'>Contact Form</a>.";
         } else {
-          botMsg.textContent = "🤔 For more info, contact us.";
+          botMsg.textContent = "🤔 For more info, please use the Contact Form.";
         }
 
         chatBody.appendChild(botMsg);
@@ -213,7 +228,7 @@
       setTimeout(() => {
         let botMsg = document.createElement("div");
         botMsg.className = "bot-message";
-        
+
         if (question.includes("burn")) {
           botMsg.textContent = "🕯️ Our candles burn 30–35 hrs (small) and 50–60 hrs (big).";
         } else if (question.includes("Shipping")) {
@@ -221,9 +236,9 @@
         } else if (question.includes("Return")) {
           botMsg.textContent = "❌ Sorry, we do not accept returns.";
         } else if (question.includes("Contact")) {
-          botMsg.textContent = "📞 For more info, contact us at: support@lumosglow.com";
+          botMsg.innerHTML = "📞 Please fill out our <a href='/contact.html' target='_blank'>Contact Form</a>.";
         } else {
-          botMsg.textContent = "🤔 For more info, contact us.";
+          botMsg.textContent = "🤔 For more info, please use the Contact Form.";
         }
 
         chatBody.appendChild(botMsg);
@@ -234,6 +249,10 @@
     function refreshChat() {
       document.getElementById("chat-body").innerHTML =
         '<div class="bot-message">Hello ✨ How can I help you today?</div>';
+    }
+
+    function closeChat() {
+      document.getElementById("chatbot").style.display = "none";
     }
   </script>
 
