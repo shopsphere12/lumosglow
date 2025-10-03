@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumos Glow - Luxury Candles</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="Untitled_design__1_-removebg-preview.png" type="image/png" />
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Lumos Glow offers premium handcrafted luxury candles with soothing aromas. Indulge in pure elegance." />
+  <meta name="keywords" content="candles, luxury candles, rose candle, scented candles, Lumos Glow" />
+
+  <!-- Open Graph for social sharing -->
+  <meta property="og:title" content="Lumos Glow - Luxury Candles" />
+  <meta property="og:description" content="Handcrafted premium scented candles for a luxurious experience." />
+  <meta property="og:image" content="./ChatGPT Image May 15, 2025, 03_05_01 PM.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f3ef;
+      color: #1d1d1d;
+    }
+    header {
+      background-color: #fff;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header img { height: 50px; }
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #2e2e2e;
+      font-weight: 600;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { color: #a14f79; }
+
+    /* Slideshow */
+    .slideshow-container {
+      max-width: 100%;
+      position: relative;
+      margin: auto;
+      overflow: hidden;
+      height: 60vh;
+    }
+    .slide { display: none; width: 100%; height: 100%; object-fit: cover; }
+    .active-slide { display: block; animation: fadeIn 1.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .hero-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white; font-family: 'Playfair Display', serif;
+      font-size: 48px; text-align: center;
+      background: rgba(0,0,0,0.5); padding: 15px 25px; border-radius: 12px;
+    }
+
+    /* Products */
+    main { max-width: 1300px; margin: auto; padding: 60px 20px; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+    .product-card {
+      background: #fff; border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      overflow: hidden; transition: transform 0.3s ease;
+    }
+    .product-card:hover { transform: translateY(-8px); }
+    .product-card img {
+      width: 100%;
+      height: auto;          /* Keep full image */
+      max-height: 280px;     /* Prevent too tall */
+      object-fit: contain;   /* Show full candle */
+      background: #fff;      /* Clean background */
+      display: block;
+      margin: 0 auto;
+    }
+    .product-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; margin: 15px; color: #a14f79;
+    }
+    .product-card p { margin: 0 15px 15px; font-size: 15px; color: #555; }
+    .price { font-size: 18px; font-weight: 600; color: #a14f79; margin: 0 15px 15px; }
+    .btn {
+      display: inline-block; margin: 0 15px 20px;
+      padding: 10px 25px; background: #a14f79; color: white;
+      border-radius: 30px; font-size: 14px; text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .btn:hover { background: #812a5d; }
+
+    /* Footer */
+    footer {
+      background: #eee; padding: 30px; text-align: center;
+      font-size: 14px; color: #666;
+    }
+    font-family: 'Poppins', sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 20px;
+      color: #2c2c2c;
+    }
+
+    /* Chat button */
+    #chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: pink;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.6);
+      transition: transform 0.3s ease;
+    }
+    #chat-button:hover { transform: scale(1.1); }
+
+    /* Chat window */
+    #chat-window {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      max-height: 500px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(255, 105, 180, 0.6);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 2px solid pink;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn { from {opacity:0; transform:scale(0.9);} to {opacity:1; transform:scale(1);} }
+
+    /* Header */
+    #chat-header {
+      background: pink;
+      color: #fff;
+      padding: 10px;
+      font-weight: bold;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #chat-header button {
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* Messages */
+    #chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .message {
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.4;
+      font-size: 14px;
+      animation: fadeIn 0.3s ease;
+    }
+    .bot { background: #ffe6f0; color: #333; }
+    .user { background: #f9f9f9; border: 1px solid #ddd; align-self: flex-end; }
+
+    /* Input */
+    #chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    #chat-input input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      border-radius: 0;
+      outline: none;
+      font-size: 14px;
+    }
+    #chat-input button {
+      background: pink;
+      border: none;
+      padding: 10px 16px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 0;
+    }
+
+    /* Pre-questions */
+    .pre-question {
+      background: #fce4ec;
+      padding: 8px;
+      margin: 4px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 13px;
+      transition: background 0.3s;
+    }
+    .pre-question:hover { background: #f8bbd0; }
+
+      .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  footer a:hover {
+    color: #ff4da6;
+  }
+  @media(max-width:600px) {
+    footer { text-align: center; }
+    .footer-grid div { margin-bottom: 20px; }
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="./Lumos_Glow-removebg-preview.png" alt="Lumos Glow Logo" />
+  <nav>
+    <a href="./index.html">Home</a>
+    <a href="#products">Shop</a>
+    <a href="./contactforms.html">Contact</a>
+  </nav>
+</header>
+
+<!-- Slideshow -->
+<div class="slideshow-container">
+  <a href="rosegoldcandle.html">
+    <img class="slide active-slide" src="./Rose-Scented Candle and Thank You Set.png" alt="Rose Candle Gift Set">
+    <img class="slide" src="./ChatGPT Image May 15, 2025, 03_11_01 PM.png" alt="Luxury Candle Collection">
+    <img class="slide" src="./ChatGPT Image May 15, 2025, 03_18_54 PM.png" alt="Candle Showcase">
+  </a>
+  <div class="hero-text">Indulge in Pure Luxury</div>
+</div>
+
+<!-- Products -->
+<main>
+  <section id="products" class="products">
+    <div class="product-card">
+      <a href="./rosegoldcandle.html">
+        <img src="./ChatGPT Image May 15, 2025, 03_05_01 PM.png" alt="Rose Glow Candle" />
+      </a>
+      <h3>Rose Glow Candle</h3>
+      <p>Crafted from soy wax and natural rose essence. A floral escape in a glass jar.</p>
+      <p class="price">₹149</p>
+      <a href="./rosegoldcandle.html" class="btn">Buy Now</a>
+    </div>
+  </section>
+</main>
+
+  <main>
+  <section id="products" class="products">
+    <div class="product-card">
+      <a href="#">
+        <img src="./MothichurladduCandle.png" alt="Mothichur laddu Candle" />
+      </a>
+      <h3>Mothichur Laddu Candle</h3>
+      <p>candle that makes your mouth water, pack of 6 .</p>
+      <p class="price">₹xxx</p>
+      <a href="#" class="btn">Buy Now</a>
+    </div>
+  </section>
+</main>
+
+ <!-- Chat button -->
+  <button id="chat-button">💬</button>
+
+  <!-- Chat window -->
+  <div id="chat-window">
+    <div id="chat-header">
+      💖 Lumos Glow Assistant
+      <button id="close-chat">✖</button>
+    </div>
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <input type="text" id="user-input" placeholder="Type your message..." />
+      <button id="send-btn">➤</button>
+    </div>
+  </div>
+
+<!-- Footer -->
+<footer style="background:#222; color:#fff; padding:40px 20px; font-family: Arial, sans-serif;">
+  <div class="footer-grid">
+
+    <!-- About -->
+    <div>
+      <h3 style="margin-bottom:15px; color:#ff4da6;">Lumos Glow</h3>
+      <p>Luxury candles handcrafted with love ✨<br>
+      100 Days • 1 Lakh Challenge 🕯️</p>
+      <div style="margin-top:15px;">
+        <a href="https://instagram.com/your_insta" target="_blank" style="margin-right:10px; color:#fff;">📷</a>
+        <a href="https://wa.me/yourwhatsappnumber" target="_blank" style="margin-right:10px; color:#fff;">💬</a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h4 style="margin-bottom:10px;">Quick Links</h4>
+      <ul style="list-style:none; padding:0; line-height:1.8;">
+        <li><a href="track-order.html" style="color:#fff; text-decoration:none;">Track Order</a></li>
+        <li><a href="return.html" style="color:#fff; text-decoration:none;">Return & Refund Policy</a></li>
+        <li><a href="terms.html" style="color:#fff; text-decoration:none;">Terms & Conditions</a></li>
+        <li><a href="faq.html" style="color:#fff; text-decoration:none;">FAQ</a></li>
+      </ul>
+    </div>
+
+    <!-- Company -->
+    <div>
+      <h4 style="margin-bottom:10px;">Company</h4>
+      <ul style="list-style:none; padding:0; line-height:1.8;">
+        <li><a href="our-story.html" style="color:#fff; text-decoration:none;">Our Story</a></li>
+        <li><a href="contact.html" style="color:#fff; text-decoration:none;">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h4 style="margin-bottom:10px;">Get in Touch</h4>
+      <p>📍 Bengaluru, Karnataka, India</p>
+      <p>📞 +91 7204451526</p>
+      <p>✉️ shopsphere.in@gmail.com</p>
+    </div>
+
+  </div>
+  <div style="text-align:center; margin-top:30px; font-size:14px; border-top:1px solid #444; padding-top:15px;">
+    © 2025 Lumos Glow. All Rights Reserved.
+  </div>
+</footer>
+
+
+<!-- Razorpay & Slideshow -->
+<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+<script defer>
+  // Slideshow
+  let slideIndex = 0;
+  function showSlides() {
+    let slides = document.querySelectorAll(".slide");
+    slides.forEach(slide => slide.classList.remove("active-slide"));
+    slideIndex++;
+    if (slideIndex > slides.length) { slideIndex = 1; }
+    slides[slideIndex - 1].classList.add("active-slide");
+    setTimeout(showSlides, 4000);
+  }
+  showSlides();
+
+  // 🚀 Auto redirect if user comes from Instagram
+  if (document.referrer.includes("instagram.com")) {
+    window.location.href = "./goldrose.html"; // redirect target
+  }
+
+  const chatButton = document.getElementById("chat-button");
+    const chatWindow = document.getElementById("chat-window");
+    const closeChat = document.getElementById("close-chat");
+    const chatMessages = document.getElementById("chat-messages");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    // Open chat
+    chatButton.onclick = () => {
+      chatWindow.style.display = "flex";
+      chatMessages.innerHTML = ""; 
+      addMessage("bot", "Hello ✨ How can I help you today?");
+      showPreQuestions();
+    };
+
+    // Close chat
+    closeChat.onclick = () => chatWindow.style.display = "none";
+
+    // Add messages
+    function addMessage(sender, text) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerHTML = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Show pre-questions
+    function showPreQuestions() {
+      const questions = [
+        "🕯️ Candle burn time?",
+        "🚚 Shipping & Delivery?",
+        "❌ Return policy?",
+        "📞 Contact support?"
+      ];
+      questions.forEach(q => {
+        const div = document.createElement("div");
+        div.classList.add("pre-question");
+        div.textContent = q;
+        div.onclick = () => handleQuestion(q);
+        chatMessages.appendChild(div);
+      });
+    }
+
+    // Handle pre-questions
+    function handleQuestion(q) {
+      addMessage("user", q);
+
+      if (q.includes("burn time")) {
+        setTimeout(() => addMessage("bot", "🕯️ Our candles burn for 40–50 hours."), 600);
+      }
+      else if (q.includes("Shipping")) {
+        setTimeout(() => addMessage("bot", "🚚 Delivery in 3–5 business days via trusted couriers."), 600);
+      }
+      else if (q.includes("Return")) {
+        setTimeout(() => addMessage("bot", "🚫 Sorry, we do not accept returns."), 600);
+      }
+      else if (q.includes("Contact")) {
+        setTimeout(() => {
+          addMessage("bot", "📞 Contact us directly:<br>☎️ +91 7204451526<br>📧 shopsphere.in@gmail.com<br><a href='contact.html' target='_blank'>🌐 Open Contact Form</a>");
+        }, 600);
+      }
+
+      // Keep pre-questions showing continuously
+      setTimeout(showPreQuestions, 1000);
+    }
+
+    // Send custom message
+    sendBtn.onclick = sendMessage;
+    userInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      addMessage("user", text);
+      userInput.value = "";
+      setTimeout(() => addMessage("bot", "🤖 Sorry, I didn’t understand. for more info <a href='contact.html' target='_blank'>🌐 Open Contact Form</a>"), 800);
+      setTimeout(showPreQuestions, 1000);
+    }
+</script>
+
+</body>
+</html>
