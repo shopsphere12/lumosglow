@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F5EKP0FY3H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-F5EKP0FY3H');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shipping Form - Lumos Glow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@400&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fef9f6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: 1px solid #f0e4de;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      color: #a14f79;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #5b5b5b;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background-color: #a14f79;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 30px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #812a5d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Shipping Form</h1>
+    <form action="https://api.web3forms.com/submit" method="post">
+      <input type="hidden" name="access_key" value="0f6b356e-b11f-4713-916f-5ef8bead4166">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required>
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+      <label for="address">Shipping Address</label>
+      <textarea id="address" name="address" rows="3" required></textarea>
+      <label for="product">Product Name</label>
+      <input type="text" id="product" name="product" placeholder="e.g. mothichur candle" required>
+      <label for="scent">Scent</label>
+      <select id="scent" name="scent">
+        <option>None</option>
+      </select>
+       <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" min="1" value="1">
+      <input type="hidden" name="redirect" value="https://payments.cashfree.com/forms?code=twobins">
+      <button type="submit" class="submit-btn">Submit Order</button>
+    </form>
+  </div>
+
+</body>
+</html>
