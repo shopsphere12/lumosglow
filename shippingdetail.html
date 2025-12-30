@@ -29,7 +29,6 @@
     <h1>Shipping Form</h1>
     <form id="form">
       <input type="hidden" name="access_key" value="806e66f0-5b06-46d1-8c12-eeda834a04a5">
-      <input type="hidden" name="redirect" value="https://payments.cashfree.com/forms/lomusglow">
       
       <label for="fullName">Full Name</label>
       <input type="text" id="fullName" name="fullName" required>
@@ -43,8 +42,8 @@
       <label for="product">Product Name</label>
       <select id="product" name="product" required>
         <option value="" disabled selected>Select a product</option>
-        <option value="Rose Gold Candle">Rose Gold Candle</option>
         <option value="Jar Scented Premium Candle">Jar Scented Premium Candle</option>
+        <option value="Rose Gold Candle">Rose Gold Candle</option>
         <option value="Mothichur Candle">Mothichur Candle</option>
       </select>
 
@@ -66,20 +65,25 @@
     const form = document.getElementById('form');
     const submitBtn = document.getElementById('submitBtn');
 
-    // SCENT OPTIONS OBJECT
+    // SCENT OPTIONS
     const scentOptions = {
       "Rose Gold Candle": ["Rose Gold"],
       "Jar Scented Premium Candle": ["Coffee", "Rose"],
       "Mothichur Candle": ["Mothichur Special"]
     };
 
-    // UPDATE SCENTS BASED ON PRODUCT
+    // REDIRECT LINKS
+    const redirectLinks = {
+      "Jar Scented Premium Candle": "https://payments.cashfree.com/forms/emifor500rupee",
+      "Rose Gold Candle": "https://payments.cashfree.com/forms?code=lomusglow",
+      "Mothichur Candle": "https://payments.cashfree.com/forms/twobins"
+    };
+
+    // Update scents based on product selection
     productSelect.addEventListener('change', function() {
       const selectedProduct = this.value;
       const options = scentOptions[selectedProduct] || [];
-      
-      scentSelect.innerHTML = ""; // Clear existing
-      
+      scentSelect.innerHTML = ""; 
       options.forEach(scent => {
         const opt = document.createElement('option');
         opt.value = scent;
@@ -88,9 +92,18 @@
       });
     });
 
-    // FORM SUBMISSION WITH REDIRECT
+    // Form Submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      const selectedProduct = productSelect.value;
+      const targetRedirect = redirectLinks[selectedProduct];
+
+      if (!targetRedirect) {
+          alert("Please select a valid product.");
+          return;
+      }
+
       submitBtn.textContent = "Processing...";
       submitBtn.disabled = true;
 
@@ -105,8 +118,8 @@
         const data = await response.json();
 
         if (data.success) {
-          // If successful, manual redirect to Cashfree
-          window.location.href = "https://payments.cashfree.com/forms/lomusglow";
+          // Redirect based on the selected product link
+          window.location.href = targetRedirect;
         } else {
           alert("Error: " + data.message);
           submitBtn.textContent = "Submit and Pay";
