@@ -17,19 +17,7 @@
     .form-container { max-width: 600px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); border: 1px solid #f0e4de; }
     h1 { font-family: 'Playfair Display', serif; text-align: center; color: #a14f79; margin-bottom: 30px; }
     label { display: block; margin-bottom: 8px; color: #5b5b5b; font-weight: 600; }
-    
-    /* CSS FIX: box-sizing ensures inputs stay inside the container */
-    input, select, textarea { 
-      width: 100%; 
-      padding: 12px; 
-      margin-bottom: 20px; 
-      border-radius: 8px; 
-      border: 1px solid #ccc; 
-      font-size: 14px; 
-      box-sizing: border-box; 
-    }
-    
-    textarea { resize: vertical; }
+    input, select, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; box-sizing: border-box; }
     .submit-btn { background-color: #a14f79; color: white; border: none; padding: 14px; border-radius: 30px; width: 100%; font-size: 16px; cursor: pointer; transition: background 0.3s ease; }
     .submit-btn:hover { background-color: #812a5d; }
     .submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
@@ -49,63 +37,86 @@
       <label for="phone">Phone Number</label>
       <input type="tel" id="phone" name="phone" required>
       
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" required>
-      
       <label for="address">Shipping Address</label>
       <textarea id="address" name="address" rows="3" required></textarea>
       
       <label for="product">Product Name</label>
-      <input type="text" id="product" name="product" placeholder="e.g. Rose Glow Candle" required>
-      
-      <label for="scent">Scent</label>
-      <select id="scent" name="scent">
-        <option value="Rose Glow">Rose Glow</option>
+      <select id="product" name="product" required>
+        <option value="" disabled selected>Select a product</option>
+        <option value="Rose Gold Candle">Rose Gold Candle</option>
+        <option value="Jar Scented Premium Candle">Jar Scented Premium Candle</option>
+        <option value="Mothichur Candle">Mothichur Candle</option>
+      </select>
+
+      <label for="scent">Scent / Flavor</label>
+      <select id="scent" name="scent" required>
+        <option value="" disabled selected>Please select a product first</option>
       </select>
       
       <label for="quantity">Quantity</label>
       <input type="number" id="quantity" name="quantity" min="1" value="1">
       
-      <button type="submit" class="submit-btn">Submit Order</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Submit and Pay</button>
     </form>
   </div>
 
   <script>
+    const productSelect = document.getElementById('product');
+    const scentSelect = document.getElementById('scent');
     const form = document.getElementById('form');
-    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitBtn = document.getElementById('submitBtn');
 
+    // SCENT OPTIONS OBJECT
+    const scentOptions = {
+      "Rose Gold Candle": ["Rose Gold"],
+      "Jar Scented Premium Candle": ["Coffee", "Rose"],
+      "Mothichur Candle": ["Mothichur Special"]
+    };
+
+    // UPDATE SCENTS BASED ON PRODUCT
+    productSelect.addEventListener('change', function() {
+      const selectedProduct = this.value;
+      const options = scentOptions[selectedProduct] || [];
+      
+      scentSelect.innerHTML = ""; // Clear existing
+      
+      options.forEach(scent => {
+        const opt = document.createElement('option');
+        opt.value = scent;
+        opt.textContent = scent;
+        scentSelect.appendChild(opt);
+      });
+    });
+
+    // FORM SUBMISSION WITH REDIRECT
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+      e.preventDefault();
+      submitBtn.textContent = "Processing...";
+      submitBtn.disabled = true;
 
-        const formData = new FormData(form);
-        const originalText = submitBtn.textContent;
+      const formData = new FormData(form);
 
-        submitBtn.textContent = "Processing...";
-        submitBtn.disabled = true;
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
 
-        try {
-            const response = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                body: formData
-            });
+        const data = await response.json();
 
-            const data = await response.json();
-
-            if (data.success) {
-                // SUCCESS: Redirect to the payment link
-                window.location.href = formData.get("redirect");
-            } else {
-                // ERROR: Show the specific error from the API
-                alert("Error: " + data.message);
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-
-        } catch (error) {
-            alert("Something went wrong. Please check your internet and try again.");
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
+        if (data.success) {
+          // If successful, manual redirect to Cashfree
+          window.location.href = "https://payments.cashfree.com/forms/lomusglow";
+        } else {
+          alert("Error: " + data.message);
+          submitBtn.textContent = "Submit and Pay";
+          submitBtn.disabled = false;
         }
+      } catch (error) {
+        alert("Something went wrong. Please try again.");
+        submitBtn.textContent = "Submit and Pay";
+        submitBtn.disabled = false;
+      }
     });
   </script>
 </body>
