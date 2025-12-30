@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-</head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F5EKP0FY3H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F5EKP0FY3H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-F5EKP0FY3H');
-</script>
+    gtag('config', 'G-F5EKP0FY3H');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shipping Form - Lumos Glow</title>
@@ -53,6 +51,7 @@
       margin-bottom: 20px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      box-sizing: border-box; /* Added for better alignment */
       font-size: 14px;
     }
 
@@ -81,25 +80,34 @@
 
   <div class="form-container">
     <h1>Shipping Form</h1>
-    <form action="https://api.web3forms.com/submit" method="post">
-      <input type="hidden" name="access_key" value="<input type="a4f76950-4618-4cc0-927d-809203c11daa">
+    <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="806e66f0-5b06-46d1-8c12-eeda834a04a5">
+      
       <label for="fullName">Full Name</label>
       <input type="text" id="fullName" name="fullName" required>
+      
       <label for="phone">Phone Number</label>
       <input type="tel" id="phone" name="phone" required>
+      
       <label for="email">Email Address</label>
       <input type="email" id="email" name="email" required>
+      
       <label for="address">Shipping Address</label>
       <textarea id="address" name="address" rows="3" required></textarea>
+      
       <label for="product">Product Name</label>
       <input type="text" id="product" name="product" placeholder="e.g. Rose Glow Candle" required>
+      
       <label for="scent">Scent</label>
       <select id="scent" name="scent">
         <option>Rose Glow</option>
       </select>
-       <label for="quantity">Quantity</label>
+      
+      <label for="quantity">Quantity</label>
       <input type="number" id="quantity" name="quantity" min="1" value="1">
+      
       <input type="hidden" name="redirect" value="https://payments.cashfree.com/forms/lomusglow">
+      
       <button type="submit" class="submit-btn">Submit Order</button>
     </form>
   </div>
